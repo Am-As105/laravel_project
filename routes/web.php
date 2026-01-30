@@ -20,4 +20,4 @@ Route::get('/groups', [GroupController::class , 'read']);
 
 Route::get('/contacts', [ContactController::class, 'index']);
 Route::post('/contacts', [ContactController::class, 'store']);
-Route::post('contacts/{contact}', [CachingIterator::class , 'delete']);
+Route::post('contacts/{contact}', [ContactController::class , 'destroy']);
