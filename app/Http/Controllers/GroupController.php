@@ -8,27 +8,41 @@ use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
-
-    public function page()
+    public function index()
     {
-         return view('groups.index');
+        $groups = Group::all();
+        return view('groups.index', compact('groups'));
     }
 
-    public function create(Request $request)
-
+    public function store(Request $request)
     {
         Group::create([
             'name' => $request->name,
-            'description' =>$request->description,
+            'description' => $request->description,
         ]);
-         
-        return back();
 
-        
+        return back();
     }
-    public function read()
-     {
-       $groups = Group::all();
-        return view('groups.index', compact('groups'));
-     }
+
+    public function edit(Group $group)
+    {
+        return view('groups.edit', compact('group'));
+    }
+
+    public function update(Request $request, Group $group)
+    {
+        $group->update(
+            [
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return redirect('/groups');
+    }
+
+    public function destroy(Group $group)
+    {
+        $group->delete();
+        return redirect('/groups');
+    }
 }
